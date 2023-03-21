@@ -1,0 +1,76 @@
+version: '3.1'
+
+volumes:
+  pg_lkdata:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${PG14_LK_DATA_PATH}
+
+networks:
+  nexus-pht: {}
+
+services:
+  db:
+    networks:
+    - nexus-pht
+    image: postgres:14
+    container_name: labkey_db_test
+    ports:
+    - "5432:5432"
+    volumes:
+    - pg_lkdata:/var/lib/postgresql/data
+    restart: always
+    environment:
+    - POSTGRES_HOST=localhost
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+    - POSTGRES_DB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+  
+  web-init:
+    image: labkey-ce-server:22.11.0
+    networks:
+    - nexus-pht
+    user: root 
+    volumes:
+    - ${LABKEY_FILES}/:/labkey/server/files
+    - ${LABKEY_EXTERNAL_MODULES}:/labkey/server/modules/nexus_external_modules
+    command: chown -R tomcat:tomcat /labkey/server/files /labkey/server/modules/nexus_external_modules
+
+  web:
+    networks:
+    - nexus-pht
+    build: 
+      context: ./LabKeyCEServer/22.11.0
+      args:
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASS: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: ${POSTGRES_DB} 
+        SMTP_HOST: ${LABKEY_DEFAULT_DOMAIN}
+    image: labkey-ce-server:22.11.0
+    container_name: labkey_web_test
+    ports:
+    - "8080:8080"
+    volumes:
+    - ${LABKEY_FILES}/:/labkey/server/files
+    - ${LABKEY_EXTERNAL_MODULES}:/labkey/server/modules/nexus_external_modules
+    environment:
+    - POSTGRES_HOST=db
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+    - POSTGRES_DB
+    - LABKEY_DEFAULT_DOMAIN
+    depends_on:
+      web-init:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+    links:
+    - db 
+
