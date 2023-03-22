@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Implementation-Version: 22.11.0
+Implementation-Title: nexus_external_modules
+Implementation-Vendor: LabKey
+

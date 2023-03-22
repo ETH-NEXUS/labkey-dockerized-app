@@ -51,3 +51,4 @@
         brokerURL="vm://localhost?broker.persistent=false&amp;broker.useJmx=false"
         brokerName="LocalActiveMQBroker"/> @@jmsConfig@@-->
 </Context>
+

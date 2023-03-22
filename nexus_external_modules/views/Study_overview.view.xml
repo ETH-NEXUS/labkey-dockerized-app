@@ -1,0 +1,12 @@
+<view xmlns="http://labkey.org/data/xml/view"
+  title="Nexus Study Overview"
+  frame="none">
+    <permissions>
+        <permission name="read"/>
+    </permissions>
+    <dependencies>
+      <dependency path="nexus_external_modules/jquerz-3.6.2.min.js"/>
+      <dependency path="nexus_external_modules/shared_functions.js"/>
+      <dependency path="nexus_external_modules/stylesheet.css"/>
+    </dependencies>
+</view>
