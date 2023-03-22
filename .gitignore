@@ -1,0 +1,14 @@
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# env file
+.env*
+
+# labkey
+LabKey22.11.0-2-community.tar.gz
+LabKey21.11.4-5-community.tar.gz
