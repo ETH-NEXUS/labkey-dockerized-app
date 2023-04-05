@@ -10,5 +10,4 @@ Thumbs.db
 .env*
 
 # labkey
-LabKey22.11.0-2-community.tar.gz
-LabKey21.11.4-5-community.tar.gz
+*-community.tar.gz
