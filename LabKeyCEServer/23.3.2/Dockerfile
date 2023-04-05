@@ -9,7 +9,7 @@
 #   * Base: Ubuntu 22.04 LTS
 #   * Tomcat: 9.0.71
 #   * Java: 1.8u112 (from the debian pkg openjdk-17-jdk LTS)
-#   * LabKey Server: 22.11.0-2-community
+#   * LabKey Server: 23.3.2-5-community
 #
 # Storage:
 # =============

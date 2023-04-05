@@ -71,7 +71,7 @@ docker-compose -f docker-compose.yml up -d
 in your browser go to `http://localhost:8080/` to see the app running
 
 Running containers
-
+![containers_running](./img/containers_running.png)
 
 and to stop the app
 ```
