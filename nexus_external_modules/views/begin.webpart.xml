@@ -1,8 +1,0 @@
-<webpart xmlns="http://labkey.org/data/xml/webpart"
-  title="scProteomicsRightLinks">
-    <view name="begin"/>
-    <locations>
-      <location name="menu"/>
-      <location name="body"/>
-    </locations>
-</webpart>

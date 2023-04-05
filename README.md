@@ -1,4 +1,7 @@
 # Labkey deployment with docker
+TODO
+- documentation for dockerfile
+
 
 This is a public repository for running LabKey Server in a docker container.
 The setup also includes a possibility to connect external modules for customized webpages on the server.
@@ -12,7 +15,7 @@ The setup also includes a possibility to connect external modules for customized
 
 ## Files description
 
-- LabKeyCEServer/22.11.0/src/LabKey22.11.0-2-community.tar.gz - a LabKey Server comunity release downloaded form [official LabKey website](https://www.labkey.com/download-community-edition/current-release/) 
+- LabKeyCEServer/23.3.2/src/LabKey23.3.2-5-community.tar.gz - a LabKey Server comunity release downloaded form [official LabKey website](https://www.labkey.com/download-community-edition/current-release/) 
 - enable_app.sh - utility script used for managing the application (start, stop containers)
 
 
@@ -56,7 +59,6 @@ This deployment uses following base images:
 ```
 docker-compose -f docker-compose.yml build
 ```
-go to `http://localhost:8080/`
 by default docker uses `.env` file. If you named it differently please add `--env-file <labkey-var-conf>`
 
 
@@ -66,6 +68,10 @@ start LabKey app
 ```
 docker-compose -f docker-compose.yml up -d
 ```
+in your browser go to `http://localhost:8080/` to see the app running
+
+Running containers
+
 
 and to stop the app
 ```
