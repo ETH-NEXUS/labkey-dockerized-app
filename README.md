@@ -1,6 +1,7 @@
 # Labkey deployment with docker
 TODO
 - documentation for dockerfile
+- License
 
 
 This is a public repository for running LabKey Server in a docker container.
@@ -19,7 +20,7 @@ The setup also includes a possibility to connect external modules for customized
 - enable_app.sh - utility script used for managing the application (start, stop containers)
 
 
-### Create docker network 
+## Create docker network 
 
 If needed create a docker network to run the containers. The containers are running inside a dedicated network which you can find in `docker-compose.yml` file
 
@@ -28,7 +29,7 @@ If needed create a docker network to run the containers. The containers are runn
 ```
 
 
-### Build the container images
+## Build the container images
 
 1. Clone the repository to your local machine 
 ```bash
