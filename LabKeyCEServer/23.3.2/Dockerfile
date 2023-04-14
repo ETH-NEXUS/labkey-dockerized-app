@@ -43,6 +43,7 @@ ENV PG_USER=$POSTGRES_USER \
      LK_SMTP_HOST=$SMTP_HOST
 
 RUN apt-get update && \
+     apt-get upgrade --yes && \
      export DEBIAN_FRONTEND=noninteractive && \
      apt-get -y -q install openjdk-17-jdk && \
      apt-get -y -q install build-essential ssl-cert libreadline-dev zlib1g-dev gnupg wget curl graphviz && \
