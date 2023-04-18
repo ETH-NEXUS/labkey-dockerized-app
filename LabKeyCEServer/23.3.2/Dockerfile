@@ -43,6 +43,7 @@ ENV PG_USER=$POSTGRES_USER \
      LK_SMTP_HOST=$SMTP_HOST
 
 RUN apt-get update && \
+     apt-get upgrade --yes && \
      export DEBIAN_FRONTEND=noninteractive && \
      apt-get -y -q install openjdk-17-jdk && \
      apt-get -y -q install build-essential ssl-cert libreadline-dev zlib1g-dev gnupg wget curl graphviz && \
@@ -64,6 +65,11 @@ RUN cd /labkey/src && \
      mkdir -p /labkey/apps/tomcat/conf/Catalina/localhost && \
      mkdir -p /labkey/apps/tomcat/temp && \
      mkdir -p /labkey/apps/tomcat/lib && \
+     rm -fr /labkey/apps/tomcat/webapps/examples && \
+     rm -fr /labkey/apps/tomcat/webapps/ROOT && \
+     rm -fr /labkey/apps/tomcat/webapps/manager && \
+     rm -fr /labkey/apps/tomcat/webapps/docs && \
+     rm -fr /labkey/apps/tomcat/webapps/host-manager && \
      chown -R tomcat:tomcat /labkey/apps/tomcat && \
      rm /labkey/src/apache-tomcat-$TOMCAT_VERSION.tar.gz
 
