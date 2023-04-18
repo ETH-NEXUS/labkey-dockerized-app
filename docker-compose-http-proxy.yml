@@ -1,0 +1,79 @@
+version: '3.1'
+
+volumes:
+  pg_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${PG14_LK_DATA_PATH}
+
+networks:
+  nexus-pht: {}
+
+services:
+  db:
+    networks:
+    - nexus-pht
+    image: postgres:14
+    container_name: labkey_db
+    ports:
+    - "5432:5432"
+    volumes:
+    - pg_data:/var/lib/postgresql/data
+    restart: always
+    environment:
+    - POSTGRES_HOST=localhost
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+    - POSTGRES_DB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+
+
+  web:
+    networks:
+    - nexus-pht
+    build: 
+      context: ./LabKeyCEServer/23.3.2
+      args:
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: ${POSTGRES_DB} 
+        SMTP_HOST: ${LABKEY_DEFAULT_DOMAIN}
+    image: labkey-ce-server:23.3.2
+    container_name: labkey_web
+    ports:
+    - "8080:8080"
+    environment:
+    - POSTGRES_HOST=db
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+    - POSTGRES_DB
+    - LABKEY_DEFAULT_DOMAIN
+    volumes:
+    - ${LABKEY_EXTERNAL_MODULES}:/labkey/server/modules/nexus_external_modules
+    - ${LABKEY_FILES_PATH}:/labkey/server/files
+    depends_on:
+    - db
+
+  httpdproxy:
+    networks:
+    - nexus-pht
+    image: httpd:2.4.55
+    container_name: http_proxy
+    volumes:
+    - $PWD/httpd_proxy/labkey_httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+    - $PWD/httpd_proxy/localhost.crt:/etc/ssl/labkey_https/cert.crt:ro
+    - $PWD/httpd_proxy/localhost.pem:/etc/ssl/labkey_https/pkey.key:ro
+    ports:
+    - "80:80"
+    - "8443:8443"
+    - "9443:9443"
+    restart: always
+
+
