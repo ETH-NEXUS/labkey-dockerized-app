@@ -100,5 +100,23 @@ and build the images with `docker-compose-http-proxy.yml`
 docker-compose -f docker-compose-http-proxy.yml build
 ```
 
+## Add external modules to your LabKey server
+Labkey Server gives you a pissibility to [add customized web pages (html, js, css) to the instance](https://www.labkey.org/Documentation/wiki-page.view?name=helloWorldModule#build). For this you need several configuration files and your own code. 
+
+In the `docker-compose.yml` you should bind a volume in which your external modules are located. For this in the `.env` file you should set `{LABKEY_EXTERNAL_MODULES}` to the folder on your local machine, e.g.
+```
+LABKEY_EXTERNAL_MODULES=${HOME}/labkey-docker-extern/nexus_external_modules/
+```
+
+Here you can download a module example.
+
+Note: 
+After starting the app you should update the folder with a GUI in order for Labkey to see the modules. 
+Enable the module in your folder as follows:
+1. Go to  (Admin) > Folder > Management and click the Folder Type tab.
+2. In the list of modules on the right, place a checkmark next to YourModuleName.
+3. Click Update Folder.
+
+
 ## Contact
 If you have any issues with the repository please contact `vipin.sreedharan@nexus.ethz.ch` or `chicherova@nexus.ethz.ch`.
